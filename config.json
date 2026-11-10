@@ -1,0 +1,17 @@
+{
+  "mode": "paper",
+  "daily_sol": 1.0,
+  "max_trade_sol": 0.02,
+  "max_open": 3,
+  "daily_data_usd": 1.0,
+  "max_data_call_usd": 0.01,
+  "loss_streak_pause": 4,
+  "pause_minutes": 30,
+  "block_dev_sold": true,
+  "block_factory_dev": 100,
+  "block_mayhem": true,
+  "trusted_payees": {
+    "launch intel": "5tP9AdEw6R3d2EkCzHQA6FHGSEQaxE5MsXT6TMoRc3ca"
+  },
+  "x402_mode": "paper"
+}

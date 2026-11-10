@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NOBUY API: check a coin before your agent buys it</title>
+<meta name="description" content="One call before every pump.fun buy. Free endpoint, pay-per-call x402 endpoint, and an MCP tool for agents.">
+<meta name="theme-color" content="#06080c">
+<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@700;800;900&family=Saira:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="config.js"></script>
+<style>
+:root{--pitch:#06080c;--turf:#111723;--line:#1d2533;--line2:#2a3446;--chalk:#f4f6f9;--chalk2:#c3cad6;--chalk3:#8893a5;--amber:#f4ab3c;--red:#ff4d3f;--green:#2fd17a;
+  --cond:'Saira Condensed',sans-serif;--sans:'Saira',system-ui,sans-serif;--mono:'Geist Mono',ui-monospace,monospace;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pitch);color:var(--chalk2);font:400 17px/1.6 var(--sans)}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+nav{border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;justify-content:space-between;align-items:center;height:58px}
+nav a{color:var(--chalk);text-decoration:none;font:800 18px var(--cond);letter-spacing:.08em}
+nav a.back{font:500 14px var(--mono);letter-spacing:0;color:var(--chalk3)}
+nav a.back:hover{color:var(--amber)}
+header{padding-block:64px 24px}
+.tag{display:inline-flex;font:800 14px var(--cond);letter-spacing:.14em;background:var(--amber);color:#07090d;padding:5px 10px}
+h1{font:900 clamp(40px,7vw,72px)/.95 var(--cond);color:var(--chalk);text-transform:uppercase;margin:18px 0 18px;text-wrap:balance}
+.lede{font-size:19px;max-width:56ch;margin:0}
+h2{font:800 28px/1.1 var(--cond);color:var(--chalk);text-transform:uppercase;letter-spacing:.02em;margin:56px 0 12px}
+p{max-width:66ch}
+code{font:400 14px var(--mono);color:var(--chalk)}
+pre{background:var(--turf);border:1px solid var(--line);padding:16px 18px;overflow-x:auto;font:400 13.5px/1.6 var(--mono);color:var(--chalk);margin:12px 0}
+.ep{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:baseline;border-top:1px solid var(--line2);padding-top:14px;margin-top:20px}
+.m{font:800 14px var(--cond);letter-spacing:.1em;padding:2px 8px;background:var(--line2);color:var(--chalk)}
+.m.paid{background:var(--amber);color:#07090d}
+.ep b{font:500 15px var(--mono);color:var(--chalk);overflow-wrap:anywhere}
+.ep p{grid-column:2;margin:4px 0 0;font-size:16px}
+table{border-collapse:collapse;width:100%;font-size:15px}
+.tbl{overflow-x:auto;margin:12px 0}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--chalk3)}
+td:first-child{font:800 16px var(--cond);letter-spacing:.06em;white-space:nowrap}
+.avoid{color:var(--red)}.caution{color:var(--amber)}.clear{color:var(--green)}
+.status{font:500 13px var(--mono);color:var(--chalk3);margin-top:18px}
+.status i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--chalk3);margin-right:8px}
+.status.on i{background:var(--green)}
+footer{border-top:1px solid var(--line);margin-top:72px;padding-block:28px 48px;font-size:14px;color:var(--chalk3)}
+a{color:var(--amber)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+</head>
+<body>
+<nav><div class="wrap"><a href="./">NOBUY</a><a class="back" href="./">Back to the live feed</a></div></nav>
+<main class="wrap">
+<header>
+  <span class="tag">API · x402 · MCP</span>
+  <h1>Check the coin before your agent buys it.</h1>
+  <p class="lede">One call per buy. Send a pump.fun mint, get back AVOID, CAUTION or CLEAR with the reasons: did the dev already sell, how many coins this dev launched before, how often they dumped inside 60 seconds.</p>
+  <p class="status" id="status"><i></i><span id="statusText">Checking whether the agent is on air…</span></p>
+</header>
+
+<h2>Endpoints</h2>
+<p>Base URL: <code id="base">shown above when the agent is on air</code></p>
+<div class="ep"><span class="m">FREE</span><b>GET /api/check/{mint}</b><p>For people and light agents. 8 checks a minute per IP.</p></div>
+<div class="ep"><span class="m paid">$0.005</span><b>GET /x402/devcheck/{mint}</b><p>Pay per call in USDC on Solana over <a href="https://www.x402.org/" target="_blank" rel="noopener noreferrer">x402</a>. No key, no account: the first call returns 402 with the price, your client pays, the retry returns the data. Also returns the full dev record.</p></div>
+<div class="ep"><span class="m">FREE</span><b>GET /x402/price</b><p>Network, asset, pay-to address and price list.</p></div>
+
+<h2>Example</h2>
+<pre>curl <span id="exBase">$NOBUY_API</span>/api/check/&lt;mint&gt;</pre>
+<p>A real response, for a coin launched Nov 8:</p>
+<pre>{
+  "mint": "81ws7wf3rcHnLBJD9TUnze77PyNy1Y4uEn76WMwmpump",
+  "found": true,
+  "symbol": "vrl",
+  "verdict": "AVOID",
+  "why": [
+    "Dev already sold, first sell at +3s.",
+    "Factory dev: 167 coins launched before this one.",
+    "On 7 of their last 8 coins the dev sold within 60s.",
+    "Mayhem-mode coin (different curve)."
+  ],
+  "coin": { "buyers": 3, "buyers_first_3s": 0, "dev_buy_sol": 0.097,
+            "dev_sold": true, "dev_first_sell_s": 2.6 }
+}</pre>
+
+<h2>Verdicts</h2>
+<div class="tbl"><table>
+<tr><th>Verdict</th><th>When</th></tr>
+<tr><td class="avoid">AVOID</td><td>The dev already sold, the dev is a factory (100+ prior coins), or the dev sold inside 60 seconds on at least half their recent coins.</td></tr>
+<tr><td class="caution">CAUTION</td><td>Repeat dev with a short record, or a mayhem-mode coin.</td></tr>
+<tr><td class="clear">CLEAR</td><td>No red flags in the dev record. Not a promise the coin goes up.</td></tr>
+<tr><td>UNKNOWN</td><td>The coin isn't in our launch data. We record new pump.fun launches live.</td></tr>
+</table></div>
+
+<h2>MCP</h2>
+<p>Gives Claude, Cursor or any MCP client a <code>nobuy_check</code> tool.</p>
+<pre>pip install mcp
+python mcp_server.py</pre>
+<pre>{
+  "mcpServers": {
+    "nobuy": { "command": "python", "args": ["/path/to/mcp_server.py"] }
+  }
+}</pre>
+<p><code>mcp_server.py</code> is in the <a id="ghlink" href="https://github.com/Raw300DEV/nobuy" target="_blank" rel="noopener noreferrer">source repo</a>. It finds the agent's current address on its own.</p>
+
+<h2>Limits</h2>
+<p>Checks read the dev wallet's on-chain record. A clean record isn't a guarantee, and nothing here is financial advice. The agent runs in paper mode: it decides, it doesn't trade your money.</p>
+</main>
+<footer><div class="wrap">NOBUY is a memecoin, no promises. <a href="./">nobuy.fun</a></div></footer>
+<script>
+(async () => {
+  const S = window.SITE || {}, api = (S.api || '').replace(/\/$/, '');
+  const st = document.getElementById('status'), tx = document.getElementById('statusText');
+  if (!S.ca) document.getElementById('ghlink').removeAttribute('href');
+  if (!api) { tx.textContent = 'The agent is off air right now. The endpoints answer while it runs.'; return; }
+  document.getElementById('base').textContent = api; document.getElementById('exBase').textContent = api;
+  try { const r = await fetch(api + '/x402/price', { cache: 'no-store' }); if (!r.ok) throw 0; st.classList.add('on'); tx.textContent = 'On air. Endpoints are live.'; }
+  catch { tx.textContent = "The agent isn't answering right now. Try again in a minute."; }
+})();
+</script>
+</body>
+</html>

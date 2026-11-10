@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NOBUY: skip the dumps, stay loaded for the runner</title>
+<meta name="description" content="An AI agent blocks the pump.fun coins built to dump on you, so your SOL is still there for the runner.">
+<meta property="og:title" content="NOBUY">
+<meta property="og:description" content="Skip the dumps. Stay loaded for the runner.">
+<meta property="og:image" content="https://nobuy.fun/og.png">
+<meta property="og:url" content="https://nobuy.fun/">
+<meta name="twitter:image" content="https://nobuy.fun/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NOBUY">
+<meta name="twitter:description" content="Skip the dumps. Stay loaded for the runner.">
+<meta name="theme-color" content="#06080c">
+<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700;800;900&family=Saira:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=7">
+</head>
+<body>
+<!--
+THESIS: Every buy goes to review. The page is a VAR broadcast: real coins replayed, the dev sell circled on the telestrator, the decision slammed on screen. It refuses the crypto-tool hero (two columns, gradient, card of stats).
+OWN-WORLD: Night-match broadcast package. Pitch-black field, white broadcast slabs with black condensed caps, review amber as the house colour, NO BUY red, ALLOWED green, Saira Condensed caps, Geist body, Geist Mono only for data. Scorebug, lower thirds, ticker crawl, red/yellow cards.
+STORY: Trenchers see the agent refuse real dev-sold, factory and mayhem coins, believe the review keeps them out of account-killing trades, then challenge it (slip test), watch the VSL, follow X, buy $NOBUY.
+FIRST VIEWPORT: Full-bleed canvas replay of a real coin's first 20s. Scorebug top-left carries the proof (WANTED 1,111 / ALLOWED 10 + replay clock). Headline sells the outcome: Skip the dumps. Stay loaded for the runner. Review lower-third at right: UNDER REVIEW then DECISION slab. Headline bottom-left at display scale with two actions. Crawl of live decisions along the bottom edge.
+FORM: VAR replay broadcast, own grounded list #6, seed key f89a2856.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+
+<header class="broadcast" id="top">
+  <canvas id="pitch" aria-hidden="true"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <div class="bugRow">
+    <a class="scorebug" href="#top" aria-label="NOBUY scoreboard">
+      <span class="sb-brand"><img src="mark.png" alt="" width="26" height="26" style="border-radius:6px">NOBUY</span>
+      <span class="sb-team"><small>WANTED</small><b id="sbWanted">1,111</b></span>
+      <span class="sb-team go"><small>ALLOWED</small><b id="sbAllowed">10</b></span>
+      <span class="sb-clock" id="sbClock">+00.0s</span>
+      <span class="sb-var"><i id="liveDot"></i><span id="sbMode">REPLAY</span></span>
+    </a>
+    <nav class="corner" aria-label="Sections">
+      <a href="#rules">The rules</a>
+      <a href="#x402">x402</a>
+      <a href="#report">Match report</a>
+      <a href="#challenge">Challenge</a>
+      <button class="ca" data-ca type="button"><b>CA</b><span>launching shortly</span></button>
+      <a class="xlink" data-x href="#" target="_blank" rel="noopener" aria-label="NOBUY on X"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.78L17.75 3Zm-1.08 16.2h1.7L7.4 4.7H5.58l11.09 14.5Z"/></svg></a>
+    </nav>
+  </div>
+
+  <div class="review" id="review" aria-live="polite">
+    <div class="rv-tag"><span class="rv-var">VAR</span><span id="rvState">CHECKING</span></div>
+    <div class="rv-coin" id="rvCoin">$—</div>
+    <div class="rv-decision" id="rvDecision">—</div>
+    <div class="rv-why" id="rvWhy"></div>
+  </div>
+
+  <div class="titleCard">
+    <h1><span>Skip the dumps.</span> <span>Stay loaded</span> <span>for the <em>runner.</em></span></h1>
+    <p class="dek">An AI agent checks every new pump.fun coin at second ten and blocks the ones built to dump on you: the dev already sold, factory devs, mayhem traps. Your SOL stays in your wallet for the next 1000x instead of feeding the last rug.</p>
+    <form class="ck" id="ck" autocomplete="off">
+      <input id="ckIn" spellcheck="false" placeholder="Paste a pump.fun CA" aria-label="Paste a pump.fun contract address">
+      <button class="btn primary" type="submit">Check it</button>
+    </form>
+    <p class="assure">Free · no wallet connect · nothing to sign · <a href="#report">watch the live feed</a> · <a href="docs.html">API + MCP for agents</a></p>
+  </div>
+
+  <div class="crawl" aria-label="Latest decisions">
+    <span class="crawl-label"><i></i>LIVE DECISIONS</span>
+    <div class="crawl-track"><div class="crawl-inner" id="crawl"></div></div>
+  </div>
+</header>
+
+<main>
+<section class="stats" id="stats">
+  <div class="wrap">
+    <h2>The trenches don't need you to be wrong. They need you to be late.</h2>
+    <p class="lead">We recorded 10,220 pump.fun launches over about 40 hours, Nov 5 to 7. This is what was waiting for whoever bought at second ten.</p>
+    <div class="h2h" id="h2h">
+      <div class="bar" style="--v:52"><span class="bar-n">52%</span><span class="bar-l">the dev had already sold within 60 seconds</span><i></i></div>
+      <div class="bar" style="--v:25"><span class="bar-n">25%</span><span class="bar-l">the dev had sold within 10 seconds</span><i></i></div>
+      <div class="bar" style="--v:68"><span class="bar-n">68%</span><span class="bar-l">the dev wallet had launched coins before</span><i></i></div>
+      <div class="bar red" style="--v:15"><span class="bar-n">15%</span><span class="bar-l">the dev wallet had 100+ coins behind it. A factory.</span><i></i></div>
+      <div class="bar" style="--v:26"><span class="bar-n">26%</span><span class="bar-l">not one buyer showed up in the first 10 minutes</span><i></i></div>
+    </div>
+    <div class="versus">
+      <div><b>35.2%</b><span>first-time devs drew 10+ buyers</span></div>
+      <div class="vs">VS</div>
+      <div><b>18.7%</b><span>devs with 10+ earlier launches</span></div>
+    </div>
+    <p class="punch">That's the trade that kills accounts. Not the one you missed. The one you shouldn't have taken. Then the revenge trade. Then the fourth.</p>
+  </div>
+</section>
+
+<section class="film" id="film">
+  <div class="wrap filmGrid">
+    <div>
+      <h2>Why the best trade is the one it refuses.</h2>
+      <p class="lead">Sixty-seven seconds. Real launches, real blocks, and the result we don't put in anyone else's highlight reel.</p>
+    </div>
+    <div class="monitor">
+      <video id="vslVideo" controls playsinline preload="metadata" poster="vsl_poster.jpg">
+        <source src="vsl.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<section class="rules" id="rules">
+  <div class="wrap">
+    <h2>So every buy goes to review.</h2>
+    <p class="lead">NOBUY watches every new SOL-paired pump.fun coin and decides at second ten. It can't spend anything on its own. Every buy and every payment goes to review, and the review answers ALLOWED or BLOCKED, in plain English. Red card: never. Yellow card: not past the limit.</p>
+    <ol class="laws">
+      <li><span class="card red" aria-label="Red card"></span><b>The dev already sold.</b><span>It never buys after the dev sells. Not once, not "usually".</span></li>
+      <li><span class="card red" aria-label="Red card"></span><b>Factory devs.</b><span>A wallet with 100+ coins behind it is a production line, not a project.</span></li>
+      <li><span class="card red" aria-label="Red card"></span><b>Mayhem-mode coins.</b><span>Different curve, different game. Skipped.</span></li>
+      <li><span class="card red" aria-label="Red card"></span><b>Poisoned pay-to addresses.</b><span>Same first 3 and last 3 characters as a trusted payee, different middle: blocked.</span></li>
+      <li><span class="card red" aria-label="Red card"></span><b>Strangers.</b><span>It only pays addresses on the trusted list.</span></li>
+      <li><span class="card yellow" aria-label="Yellow card"></span><b>Oversized buys.</b><span><i data-cfg="max_trade_sol">0.02</i> SOL per buy. Hard cap.</span></li>
+      <li><span class="card yellow" aria-label="Yellow card"></span><b>The daily cap.</b><span><i data-cfg="daily_sol">1</i> SOL a day. When the slack runs out, it stops.</span></li>
+      <li><span class="card yellow" aria-label="Yellow card"></span><b>Too many bags.</b><span><i data-cfg="max_open">3</i> open positions, max.</span></li>
+      <li><span class="card yellow" aria-label="Yellow card"></span><b>Tilt.</b><span>After <i data-cfg="loss_streak_pause">4</i> losses in a row it sits out <i data-cfg="pause_minutes">30</i> minutes. Not a reminder. The firewall refuses the spend.</span></li>
+    </ol>
+    <p class="fine">Every law is a line in a public config file. You can read the whole rulebook in ten seconds.</p>
+  </div>
+</section>
+
+<section class="x402" id="x402">
+  <div class="board" aria-hidden="true"><div class="board-run"><span>x402</span><span>USDC</span><span>SOLANA</span><span>$0.005 PER DEV CHECK</span><span>REVIEWED PAYMENTS ONLY</span><span>x402</span><span>USDC</span><span>SOLANA</span><span>$0.005 PER DEV CHECK</span><span>REVIEWED PAYMENTS ONLY</span></div></div>
+  <div class="wrap x402Grid">
+    <div>
+      <h2>Agents are about to pay for things. Somebody has to review the bill.</h2>
+      <p>Before the agent buys anything, it buys information. It pays our data seller per call, in USDC, over <b>x402</b>, the HTTP-402 payment standard built for agents. Real on-chain settlement, and every payment still goes to review first: <b>$0.01 max per call</b>, <b>$1 a day</b>, <b>only to the payee on file</b>.</p>
+      <p>The day agents can pay, scammers start sending them lookalike addresses. That's the address-poisoning trick that hits human wallets, and the review blocks it on sight.</p>
+      <p class="fine">Free checks first, paid checks second. If the review would block the buy anyway, the agent doesn't spend a cent on data.</p>
+    </div>
+    <div class="feedPanel">
+      <div class="fp-head"><span>DATA FEED</span><span class="fp-net" id="tNet">solana</span></div>
+<pre id="term"><span class="d">GET</span> /x402/devcheck/&lt;mint&gt;
+<span class="a">402 Payment Required</span>
+  price   <span class="a" id="tPrice">$0.005 USDC</span>
+  pay to  <span class="a" id="tPay">5tP9…3ca</span>
+<span class="d">review(pay)</span>  <span class="g">ALLOWED</span>  under cap · trusted payee
+<span class="d">sign</span>  TransferChecked · facilitator pays gas
+<span class="g">200 OK</span>  verdict <span class="r">AVOID</span>  dev sold at +4s</pre>
+      <div class="receipts" id="receipts">On-chain receipts appear here as the agent pays.</div>
+    </div>
+  </div>
+</section>
+
+<section class="report" id="report">
+  <div class="wrap">
+    <h2>Don't trust us. Watch it.</h2>
+    <div class="reportGrid">
+      <div class="liveFeed">
+        <div class="lf-head"><b>Decisions</b><span class="pill" id="feedMode">REPLAY</span></div>
+        <div class="lf-list" id="feed"></div>
+        <div class="lf-foot" id="logSrc">loading…</div>
+      </div>
+      <div class="matchReport">
+        <h3>Match report: one 4-hour replay, real launches</h3>
+        <dl>
+          <div><dt>Coins watched</dt><dd>5,088</dd></div>
+          <div><dt>Times the agent wanted to buy</dt><dd>1,111</dd></div>
+          <div class="go"><dt>Allowed</dt><dd>10</dd></div>
+          <div class="no"><dt>Blocked</dt><dd>1,101</dd></div>
+          <div class="sub"><dt>the dev had already sold</dt><dd>653</dd></div>
+          <div class="sub"><dt>mayhem-mode coin</dt><dd>276</dd></div>
+          <div class="sub"><dt>paused after 4 losses in a row</dt><dd>167</dd></div>
+          <div class="sub"><dt>factory dev, 100+ launches</dt><dd>83</dd></div>
+          <div class="sub"><dt>daily budget used up</dt><dd>900</dd></div>
+        </dl>
+        <p class="fine">One block can carry more than one reason, so reasons add up past 1,101. 874 blocks hit at least one rug-shape rule (dev sold, factory, mayhem). This replay ran on an older test budget, 0.05 SOL per buy and 0.5 SOL a day, which is why so many are budget blocks.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="challenge" id="challenge">
+  <div class="wrap challengeGrid">
+    <div>
+      <h2>Challenge the ref.</h2>
+      <p>Paste a pay-to address that looks like our data seller's. If the agent pays you, you win.</p>
+      <p class="fine">Trusted payee on file<br><code id="trustedAddr">5tP9AdEw6R3d2EkCzHQA6FHGSEQaxE5MsXT6TMoRc3ca</code></p>
+    </div>
+    <div class="chForm">
+      <label for="tryAddr">Your pay-to address</label>
+      <input id="tryAddr" spellcheck="false" autocomplete="off">
+      <button class="btn primary" id="tryBtn" type="button">Ask the agent to pay</button>
+      <div class="verdict" id="tryOut" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section class="post" id="honest">
+  <div class="wrap narrow">
+    <h2>What nobody else will put on their landing page.</h2>
+    <p>We backtested every simple buy rule we could think of on <b>18,063</b> real launches: fresh devs, first-time devs, big dev buys, 5+ buyers, 10+ buyers, net inflow. <b>Every one lost 2-7% per trade after fees</b>, in-sample and on data it had never seen.</p>
+    <p>So NOBUY trades on paper, on purpose. Live trading is switched off in the code. We won't sell you an agent's P&amp;L, because the data says a simple bot's P&amp;L in the trenches is a slow bleed.</p>
+    <p class="big">The trades that blow up accounts have shapes, and those shapes are checkable at second ten. That's the review.</p>
+    <ul class="ticks">
+      <li>You stop buying coins whose dev already left.</li>
+      <li>You stop feeding factories.</li>
+      <li>Your fourth loss doesn't turn into your fifth.</li>
+      <li>You paste a pay-to address and something checks the middle, not just the ends.</li>
+    </ul>
+    <p class="big">The edge in the trenches isn't finding the next 100x. It's still having a bankroll when it shows up.</p>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="wrap narrow">
+    <h2>Questions</h2>
+    <details><summary>Does the agent make money?</summary><p>We don't claim it does, and we never will. Our own backtest says simple buy rules lose after fees. The agent trades on paper so you can watch the review work on real launches without anyone's money at risk.</p></details>
+    <details><summary>Then what's the point?</summary><p>Most trading losses aren't bad luck. They're specific, avoidable trades: buying after the dev sold, buying from a factory, revenge-trading, sending to the wrong address. The review blocks those. Keeping your bankroll is the part of trading you actually control.</p></details>
+    <details><summary>Will it catch every rug?</summary><p>No. It blocks the specific shapes listed above, which are checkable on-chain at second ten. A dev can still sell after you buy. When that happens, the agent's exit rule is "dev sold, out". Read the rules, not the hype.</p></details>
+    <details><summary>Do I need to connect a wallet?</summary><p>No. The page is read-only. Nothing to sign, nothing to approve.</p></details>
+    <details><summary>Is this live trading?</summary><p>No. Paper mode. The agent refuses to start in live mode. Every paper trade pays pump.fun's fees both ways, so the numbers aren't flattered. The x402 data payments are real USDC.</p></details>
+    <details><summary>What is x402?</summary><p>A way for software to pay for a web request as it makes it: HTTP status 402, "Payment Required", settled in USDC. It lets an agent buy exactly one data call instead of a monthly plan. It also means agents will get targeted by the same address tricks people do, which is why every payment goes to review.</p></details>
+    <details><summary>Can I run the review on my own bot or wallet?</summary><p>Not yet. The rules and limits are public, so you can copy them into your own trading today. If we ship a version for your own agent, it'll be on this page first. No date promised.</p></details>
+    <details><summary>What does $NOBUY have to do with it?</summary><p>It's the memecoin for the project. The tool is free and doesn't need the coin. Memecoin, no promises.</p></details>
+    <details><summary>Who's behind it?</summary><p>An anon dev who builds the tools before the coin. The receipts, the backtest and the replay numbers are on this page. Judge the work.</p></details>
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap">
+    <h2>Nothing to lose by looking.</h2>
+    <div class="reversal">
+      <p><b>Free.</b> No sign-up, no paywall.</p>
+      <p><b>No wallet.</b> Nothing to connect or sign.</p>
+      <p><b>Paper mode.</b> No one's money trades.</p>
+      <p><b>Open data.</b> Every decision and reason is logged.</p>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="#challenge">Try to slip past it</a>
+      <a class="btn" href="#report">Watch the live feed</a>
+      <button class="ca big" data-ca type="button"><b>$NOBUY</b><span>launching shortly</span></button>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>NOBUY is a demo AI agent that trades on paper, behind a public spend firewall. It is not financial advice, not a trading service and not a promise of anything. The agent can and does lose paper trades. Backtests are not live results. $NOBUY is a memecoin, no promises. Not affiliated with pump.fun, Coinbase, any x402 provider, or the Onleash agent-wallet project. Coins shown on this page are data, not recommendations or accusations.</p>
+    <p><a data-x href="#" target="_blank" rel="noopener">X</a> · <a href="mailto:info@nobuy.fun">info@nobuy.fun</a></p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="app.js?v=7"></script>
+</body>
+</html>
