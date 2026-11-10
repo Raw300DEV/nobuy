@@ -7,6 +7,7 @@
   const API = (S.api || '').replace(/\/$/, '');
   const B58 = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
   const j = async u => { const r = await fetch(u, { cache: 'no-store' }); if (!r.ok) throw new Error(r.status); return r.json(); };
+  if (S.ca && $('ghlink')) $('ghlink').hidden = false; // repo goes public with the CA
 
   /* ---------------------------------------------------------- CA chip + X */
   document.querySelectorAll('[data-ca]').forEach(b => {
